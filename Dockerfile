@@ -43,8 +43,6 @@ RUN mkdir /var/www/webdav && chown www-data:www-data /var/www/webdav
 COPY ./upload_form.html /var/www/html/upload_form.html
 RUN chmod 755 /var/www/html/upload_form.html
 
-# Настройка Telnet
-RUN apt-get install -y telnetd
 
 # Команды для запуска служб
-CMD ["/bin/sh", "-c", "service ssh start && socat TCP-LISTEN:1234,fork EXEC:/bin/cat & socat TCP-LISTEN:4321,fork EXEC:/bin/cat & service apache2 start && service vsftpd start && service smbd start && /usr/sbin/in.telnetd -F"]
+CMD ["/bin/sh", "-c", "service ssh start && socat TCP-LISTEN:1234,fork EXEC:/bin/cat & socat TCP-LISTEN:4321,fork EXEC:/bin/cat & service apache2 start && service vsftpd start && service smbd start"]
