@@ -8,9 +8,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     telnet \
     vsftpd \
     samba \
-    apache2 \
     php \
-    libapache2-mod-php \
     php-soap \
     php-sockets \
     curl \
@@ -45,4 +43,4 @@ RUN chmod 755 /var/www/html/upload_form.html
 
 
 # Команды для запуска служб
-CMD ["/bin/sh", "-c", "service ssh start && socat TCP-LISTEN:1234,fork EXEC:/bin/cat & socat TCP-LISTEN:4321,fork EXEC:/bin/cat & service apache2 start && service vsftpd start && service smbd start"]
+CMD ["/bin/sh", "-c", "service ssh start && socat TCP-LISTEN:1234,fork EXEC:/bin/cat & socat TCP-LISTEN:4321,fork EXEC:/bin/cat && service vsftpd start && service smbd start"]
