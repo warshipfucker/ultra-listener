@@ -2,22 +2,22 @@
 FROM alpine:latest
 
 # Установка необходимых пакетов
-RUN apk update && apk add --no-cache \
+RUN apk update && apk upgrade && apk add --no-cache \
     ncat \
     openssh \
-    openssh-sftp-server \
     telnet \
     vsftpd \
     samba \
     apache2 \
-    php7 \
-    php7-soap \
-    php7-sockets \
+    php8 \
+    php8-soap \
+    php8-sockets \
     curl \
     python3 \
     py3-flask \
     busybox-extras \
-    socat
+    socat \
+    inotify-tools
 
 # Настройка портов
 EXPOSE 22 2222 23 21 139 40 80 8000 8080 25 1234 4321
