@@ -16,7 +16,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     curl \
     python3 \
     python3-flask \
-    busybox \
     socat && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
@@ -45,8 +44,9 @@ COPY ./upload_form.html /var/www/html/upload_form.html
 RUN chmod 755 /var/www/html/upload_form.html
 
 # Настройка Telnet
-RUN apt-get install -y xinetd && \
-    echo "telnet stream tcp nowait root /usr/sbin/in.telnetd in.telnetd" >> /etc/xinetd.d/telnet
+RUN apt-get install -y telnetd && \
+    echo "ALL: ALL" >> /etc/hosts.deny && \
+    echo "ALL: ALL" >> /etc/hosts.allow
 
 # Команды для запуска служб
-CMD ["/bin/sh", "-c", "service ssh start && socat TCP-LISTEN:1234,fork EXEC:/bin/cat & socat TCP-LISTEN:4321,fork EXEC:/bin/cat & service apache2 start && service vsftpd start && service smbd start && /usr/sbin/xinetd -dontfork"]
+CMD ["/bin/sh", "-c", "service ssh start && socat TCP-LISTEN:1234,fork EXEC:/bin/cat & socat TCP-LISTEN:4321,fork EXEC:/bin/cat & service apache2 start && service vsftpd start && service smbd start && /usr/sbin/in.telnetd -F"]
